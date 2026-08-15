@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #08090b;
+  --color-near-black: #111214;
+  --color-ivory: #f3ece3;
+  --color-champagne: #d8c2a8;
+  --color-burgundy: #481c22;
+  --color-espresso: #211719;
+  --color-silver: #b8bec4;
+  --color-electric-blue: #4fc3e8;
+  --color-cyan-glow: #6de7ff;
+  
+  --font-serif: 'Playfair Display', serif;
+  --font-mono: 'Space Grotesk', monospace;
+  --font-sans: 'Inter', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap');
+
+@layer base {
+  body {
+    @apply bg-obsidian text-silver font-sans m-0 p-0 overflow-x-hidden;
+    /* Hide scrollbar for cleaner look */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom Cursor Base */
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Custom Cursor Styling */
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background-color: theme('colors.silver');
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: theme('fontFamily.mono');
+  font-size: 10px;
+  font-weight: 500;
+  color: theme('colors.obsidian');
+  text-transform: uppercase;
+}
+
+#custom-cursor.hovering {
+  width: 64px;
+  height: 64px;
+  background-color: rgba(255, 255, 255, 0.9);
+  mix-blend-mode: normal;
+}
+
+@media (max-width: 768px) {
+  * {
+    cursor: auto !important;
+  }
+  #custom-cursor {
+    display: none !important;
+  }
+}
+
+/* Smooth Scrolling Container */
+#smooth-wrapper {
+  overflow: hidden;
+  width: 100vw;
+}
+
+#smooth-content {
+  will-change: transform;
+}
