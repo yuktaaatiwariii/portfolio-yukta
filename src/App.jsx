@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
+import MagazineTearTransition from './components/MagazineTearTransition/MagazineTearTransition';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
-import Personality from './components/Personality/Personality';
+
 import Achievements from './components/Achievements/Achievements';
 import TechStack from './components/TechStack/TechStack';
 import Projects from './components/Projects/Projects';
@@ -52,54 +53,18 @@ function CustomCursor() {
   );
 }
 
-function LoadingScreen({ onComplete }) {
-// ... (keeping LoadingScreen unchanged)
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(onComplete, 500);
-          return 100;
-        }
-        return prev + Math.floor(Math.random() * 15) + 5;
-      });
-    }, 100);
-    return () => clearInterval(timer);
-  }, [onComplete]);
-
-  return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1, ease: 'easeInOut' }}
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-obsidian text-silver"
-    >
-      <h1 className="font-serif text-4xl md:text-6xl text-ivory tracking-wider mb-4">
-        YUKTA TIWARI
-      </h1>
-      <p className="font-mono text-xs md:text-sm tracking-widest text-silver/60 uppercase mb-12">
-        Initializing Digital Space...
-      </p>
-      <div className="font-mono text-2xl">
-        {Math.min(progress, 100).toString().padStart(2, '0')}
-      </div>
-    </motion.div>
-  );
-}
-
 function App() {
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    if (loading) return;
-    
+    // Prevent browser from restoring previous scroll position on reload
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     // Initialize Lenis for smooth scrolling
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
@@ -117,33 +82,51 @@ function App() {
     requestAnimationFrame(raf);
 
     return () => lenis.destroy();
-  }, [loading]);
+  }, []);
+
+  const { scrollY } = useScroll();
+  const [vh, setVh] = useState(1000);
+  
+  useEffect(() => {
+    setVh(window.innerHeight);
+    
+    const handleResize = () => setVh(window.innerHeight);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Pin the portfolio for the first 120vh by translating it down exactly as much as we scroll.
+  const y = useTransform(scrollY, [0, vh * 1.2], [0, vh * 1.2], { clamp: true });
+  
+  // Apply the exact same spring physics as the tear animation to fix staggering
+  const smoothY = useSpring(y, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   return (
     <>
-      <AnimatePresence>
-        {loading && <LoadingScreen key="loading" onComplete={() => setLoading(false)} />}
-      </AnimatePresence>
-      {!loading && (
-        <>
-          <CustomCursor />
-      
-          <div id="smooth-wrapper">
-            <div id="smooth-content">
-              <main>
-                <Hero />
-                <About />
-                <Personality />
-                <Achievements />
-                <TechStack />
-                <Projects />
-                <Contact />
-                <Footer />
-              </main>
-            </div>
-          </div>
-        </>
-      )}
+      <CustomCursor />
+  
+      <div id="smooth-wrapper" className="relative">
+        <MagazineTearTransition />
+        
+        <div id="smooth-content">
+          <motion.main style={{ y: smoothY }} className="relative z-0">
+            <Hero />
+            <Achievements />
+            <About />
+            <TechStack />
+            <Projects />
+            <Contact />
+            <Footer />
+          </motion.main>
+          
+          {/* Spacer to add 120vh to the document height, allowing full scroll to bottom */}
+          <div style={{ height: '60vh' }} pointerEvents="none" />
+        </div>
+      </div>
     </>
   );
 }

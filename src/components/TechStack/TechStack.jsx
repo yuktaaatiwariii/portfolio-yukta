@@ -1,7 +1,6 @@
 import React, { useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { motion, AnimatePresence } from 'framer-motion';
-import TechCube from '../3d/TechCube';
 
 const categories = {
   DEVELOPMENT: ['React', 'Node.js', 'Express.js', 'MongoDB', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Vite'],
@@ -16,16 +15,6 @@ export default function TechStack() {
 
   return (
     <section id="stack" className="relative min-h-screen w-full bg-obsidian text-silver py-20 md:py-32 overflow-hidden border-t border-white/10">
-      
-      <div className="absolute inset-0 z-0 pointer-events-none md:pointer-events-auto opacity-30 md:opacity-100">
-        <Canvas camera={{ position: [0, 0, 8] }}>
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[10, 10, 5]} intensity={1} color="#6DE7FF" />
-          <Suspense fallback={null}>
-            <TechCube activeCategory={activeCategory} />
-          </Suspense>
-        </Canvas>
-      </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-20 relative z-10 h-full flex flex-col justify-between">
         

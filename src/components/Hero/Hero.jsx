@@ -7,14 +7,30 @@ export default function Hero() {
   const { scrollY } = useScroll();
   
   // Subtle parallax effects
-  const yImage = useTransform(scrollY, [0, 1000], [0, 150]);
+  const yImage = useTransform(scrollY, [0, 1000], [0, 0]);
   const yTextSolid = useTransform(scrollY, [0, 1000], [0, -100]);
-  const yTextStroke = useTransform(scrollY, [0, 1000], [0, -100]);
-  const yTitle = useTransform(scrollY, [0, 1000], [0, -50]);
+  const yTextStroke = useTransform(scrollY, [0, 1000], [0, 0]);
+  const yTitle = useTransform(scrollY, [0, 0], [0, -20]);
 
 
   // Letter array for vertical typography
   const letters = ['Y', 'U', 'K', 'T', 'A'];
+
+  const [startAnim, setStartAnim] = useState(false);
+
+  useEffect(() => {
+    const updateAnim = () => {
+      if (scrollY.get() > window.innerHeight * 0.4 && !startAnim) {
+        setStartAnim(true);
+      }
+    };
+    
+    // Check initially in case page is refreshed halfway down
+    updateAnim();
+    
+    const unsubscribe = scrollY.on("change", updateAnim);
+    return () => unsubscribe();
+  }, [scrollY, startAnim]);
 
   // Staggered animation variants
   const containerVars = {
@@ -27,7 +43,7 @@ export default function Hero() {
 
   const itemVars = {
     hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } }
+    show: { opacity: 1, y: 0, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1]} }
   };
 
   const letterVars = {
@@ -39,19 +55,19 @@ export default function Hero() {
   return (
     <section 
       id="hero-editorial" 
-      className="relative  w-full h-screen overflow-hidden flex items-center justify-center"
+      className="relative   w-full h-screen z-50 flex items-center justify-center"
       style={{ backgroundColor: '#EFE3D7' }}
     >
-   <Navigation />
+      <Navigation />
       <motion.div 
         variants={containerVars}
         initial="hidden"
-        animate="show"
-        className="relative  w-full h-full mx-auto px-6 md:px-12 lg:px-24 flex flex-col md:flex-row"
+        animate={startAnim ? "show" : "hidden"}
+        className="relative w-full h-full mx-auto px-6 md:px-12 lg:px-24 flex flex-col md:flex-row"
       >
          
         {/* --- TOP METADATA LABELS --- */}
-        <motion.div variants={itemVars} className="absolute  top-24 left-6 md:left-4 lg:left-24 z-40 flex items-center gap-2 text-espresso">
+        <motion.div variants={itemVars} className="absolute  top-25 left-6 md:left-4 lg:left-24 z-40 flex items-center gap-2 text-espresso">
           <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.2em] font-medium">Creative Technologist</span>
           <div className="w-12 h-px bg-espresso/50 hidden sm:block"></div>
         </motion.div>
@@ -66,43 +82,40 @@ export default function Hero() {
 
 
         {/* --- ASYMMETRICAL EDITORIAL GRID --- */}
-        <div className="relative w-full h-full flex flex-col md:flex-row mt-4 md:mt-0">
+        <div className="relative  w-full h-full flex flex-col md:flex-row ">
           
           {/* LEFT SIDE: Intro & Typography */}
-          <div className="w-full md:w-[55%] flex flex-col justify-center relative z-40 mb-12 md:mb-0 md:pt-10">
+          <div className="w-full md:w-[55%] flex flex-col justify-center relative z-40 md:pt-20">
             
-            <motion.div variants={itemVars} style={{ y: yTitle }} className="mb-6">
-              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-espresso tracking-tighter leading-[0.9] mt-8 md:mt-10">
+            <motion.div variants={itemVars} >
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-espresso tracking-tighter leading-[0.9] mb-8">
                 FULL-STACK<br />
                 <span className="italic text-espresso/80">DEVELOPER</span>
               </h1>
             </motion.div>
 
-            <motion.div variants={itemVars} className="max-w-full md:max-w-[500px] lg:max-w-[600px]">
+            <motion.div variants={itemVars} className="max-w-full  lg:max-w-[600px]">
               <p className="font-sans text-[15px] md:text-[15px] text-espresso/60 leading-[1.6] mb-6">
                 An Information Technology student who enjoys turning ideas into thoughtful digital experiences — combining full-stack development, modern frontend engineering and UI/UX design.
               </p>
               <p className="font-sans text-[15px] md:text-[15px] text-espresso/60 leading-[1.6] mb-10">
-                Currently building with the MERN stack, exploring modern interfaces, backend systems and the space where technology meets creativity.
+                Currently exploring modern interfaces, backend systems and the space where technology meets creativity.
               </p>
               
               {/* Signature / Name */}
-              <div className="mb-8">
+              <div className="mb-4">
                 <span className="font-serif italic text-3xl md:text-4xl text-espresso">Yukta Tiwari</span>
               </div>
 
-              {/* Professional Label */}
+            
+
+              {/* Academic & Location Metadata */}
+              <div className="flex gap-10 items-start pt-6 border-t border-espresso/20">
+                {/* Professional Label */}
               <div className="flex flex-col gap-1 mb-8">
                 <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-widest text-espresso font-semibold">FULL-STACK DEVELOPER</span>
                 <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-widest text-espresso/60">/ UI/UX DESIGNER</span>
               </div>
-
-              {/* Academic & Location Metadata */}
-              <div className="flex gap-10 items-start pt-6 border-t border-espresso/20">
-                <div className="flex flex-col gap-1">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-espresso font-semibold">9.4 CGPA</span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-espresso/60">RANKED #1 — IT</span>
-                </div>
                 <div className="flex flex-col gap-1">
                   <span className="font-mono text-[10px] uppercase tracking-widest text-espresso font-semibold">GREATER NOIDA, IN</span>
                   <span className="font-mono text-[10px] uppercase tracking-widest text-espresso/60">B.TECH 2024—2028</span>
@@ -113,25 +126,25 @@ export default function Hero() {
           </div>
 
           {/* RIGHT SIDE: Portrait & Typography Overlap */}
-          <div className="w-full relative flex items-center justify-end md:h-auto">
+          <div className="w-full relative flex items-center justify-end h-full ">
             
             {/* PORTRAIT IMAGE (Hierarchy: Middle Layer) */}
             <motion.div 
               variants={itemVars}
               style={{ y: yImage }}
-              className="absolute top-0 bg-amber-900 right-36 bottom-0 w-full md:w-[65%] h-full z-20 flex justify-end items-center "
+              className="absolute h-full  bg-amber-900 right-36 w-full md:w-[65%]  z-20 flex justify-end  "
             >
               <img 
                 src={mona1} 
                 alt="Yukta Tiwari"
-                className="h-full md:object-contain object-right shadow-3xl"
+                className="h-full shadow-3xl"
               />
             </motion.div>
 
             {/* GIANT VERTICAL TYPOGRAPHY (Hierarchy: Top Layer) */}
             <motion.div 
               style={{ y: yTextStroke }}
-              className="absolute  left-[5%] md:left-[8%]  top-2 flex flex-col items-center z-30 select-none pointer-events-none"
+              className="absolute  left-[5%] md:left-[7%] flex flex-col items-center z-30 select-none "
             >
               {letters.map((letter, index) => (
                 <motion.span 

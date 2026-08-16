@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 
 export default function Achievements() {
   return (
-    <section className="py-32 w-full bg-champagne text-espresso relative overflow-hidden">
+    <section className="py-20 w-full bg-champagne text-espresso relative overflow-hidden">
       {/* Decorative large text background */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none w-full text-center">
-        <span className="font-serif text-[30vw] leading-none whitespace-nowrap overflow-hidden block">
+        <span className="font-serif text-[22vw] leading-none whitespace-nowrap overflow-hidden block">
           MERIT
         </span>
       </div>
@@ -21,7 +21,7 @@ export default function Achievements() {
             transition={{ duration: 0.8 }}
             className="flex flex-col md:items-start items-center"
           >
-            <h3 className="font-serif text-6xl md:text-8xl tracking-tighter mb-2">9.4</h3>
+            <h3 className="font-serif text-6xl md:text-8xl tracking-tighter mb-2">9.5+</h3>
             <div className="h-[1px] w-12 bg-burgundy mb-4"></div>
             <p className="font-mono text-xs uppercase tracking-widest text-espresso/60">
               CGPA Maintained
@@ -49,7 +49,7 @@ export default function Achievements() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="flex flex-col md:items-start items-center"
           >
-            <h3 className="font-serif text-6xl md:text-8xl tracking-tighter mb-2">4+</h3>
+            <h3 className="font-serif text-6xl md:text-8xl tracking-tighter mb-2">2+</h3>
             <div className="h-[1px] w-12 bg-burgundy mb-4"></div>
             <p className="font-mono text-xs uppercase tracking-widest text-espresso/60">
               Years Learning

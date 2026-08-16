@@ -64,7 +64,7 @@ export default function About() {
           >
             <div className="aspect-[3/4] md:aspect-[4/5] bg-champagne relative overflow-hidden border border-espresso/10">
               <img 
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" 
+                src="" 
                 alt="Yukta Tiwari"
                 className="w-full h-full object-cover mix-blend-multiply opacity-90 filter grayscale contrast-125"
               />
