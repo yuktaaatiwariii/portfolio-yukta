@@ -55,7 +55,7 @@ export default function Hero() {
   return (
     <section 
       id="hero-editorial" 
-      className="relative   w-full h-screen z-50 flex items-center justify-center"
+      className="relative w-full h-screen z-50 flex items-center justify-center"
       style={{ backgroundColor: '#EFE3D7' }}
     >
       <Navigation />

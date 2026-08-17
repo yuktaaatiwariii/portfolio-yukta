@@ -6,7 +6,7 @@ export default function Achievements() {
     <section className="py-20 w-full bg-champagne text-espresso relative overflow-hidden">
       {/* Decorative large text background */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none w-full text-center">
-        <span className="font-serif text-[22vw] leading-none whitespace-nowrap overflow-hidden block">
+        <span className="font-serif pb-10 text-[22vw] leading-none whitespace-nowrap overflow-hidden block">
           MERIT
         </span>
       </div>

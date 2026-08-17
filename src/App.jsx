@@ -4,12 +4,10 @@ import Lenis from '@studio-freight/lenis';
 import MagazineTearTransition from './components/MagazineTearTransition/MagazineTearTransition';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
-
 import Achievements from './components/Achievements/Achievements';
-import TechStack from './components/TechStack/TechStack';
 import Projects from './components/Projects/Projects';
-import Contact from './components/Contact/Contact';
-import Footer from './components/Footer/Footer';
+// import Contact from './components/Contact/Contact';
+// import Footer from './components/Footer/Footer';
 
 function CustomCursor() {
 // ... (keeping CustomCursor unchanged)
@@ -117,13 +115,11 @@ function App() {
             <Hero />
             <Achievements />
             <About />
-            <TechStack />
             <Projects />
-            <Contact />
-            <Footer />
+          
           </motion.main>
           
-          {/* Spacer to add 120vh to the document height, allowing full scroll to bottom */}
+          {/* Spacer to add 60vh to the document height, allowing full scroll to bottom */}
           <div style={{ height: '60vh' }} pointerEvents="none" />
         </div>
       </div>

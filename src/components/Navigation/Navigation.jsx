@@ -47,9 +47,9 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-40 bg-obsidian/95 backdrop-blur-md flex flex-col justify-center items-center"
+            className="fixed h-screen inset-0 z-40 bg-black backdrop-blur-md flex flex-col  justify-center items-center"
           >
-            <div className="flex flex-col gap-8 md:gap-12 w-full max-w-2xl px-8">
+            <div className="flex flex-col h-full items-center mt-30 gap-6 md:gap-8 w-full px-8">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.id}
@@ -59,12 +59,12 @@ export default function Navigation() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="group flex items-baseline gap-4 md:gap-8 hover:ml-4 transition-all duration-300"
+                  className="group  flex items-baseline gap-4 md:gap-8 hover:ml-4 transition-all duration-300"
                 >
                   <span className="font-mono text-sm md:text-base text-silver/50 group-hover:text-cyan-glow transition-colors">
                     {link.id}
                   </span>
-                  <span className="font-serif text-4xl md:text-6xl text-ivory/80 group-hover:text-ivory transition-colors">
+                  <span className="font-serif text-6xl text-ivory/80 group-hover:text-ivory transition-colors">
                     {link.title}
                   </span>
                 </motion.a>

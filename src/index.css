@@ -18,7 +18,7 @@
 
 @layer base {
   body {
-    @apply bg-obsidian text-silver font-sans m-0 p-0 overflow-x-hidden;
+    @apply bg-amber-50 text-silver font-sans m-0 p-0 overflow-x-hidden;
     /* Hide scrollbar for cleaner look */
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
