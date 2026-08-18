@@ -2,102 +2,79 @@ import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import ProjectShowcase from './ProjectShowcase';
+import Proj from "./Proj"
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Projects() {
-  const containerRef = useRef(null);
-
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  
   useGSAP(() => {
-    // App.jsx shifts the entire layout down by 1.2vh using Framer Motion.
-    // This breaks standard GSAP measurements because the visual position is 1.2vh lower than the DOM position.
-    // We add this offset to the GSAP trigger to perfectly sync it!
-    const offset = window.innerHeight * 1.2;
-
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: containerRef.current,
-        // Start when the visual top (DOM top + offset) hits the viewport top
-        start: () => `top+=${offset} top`,
-        end: `+=${window.innerHeight * 1.5}`, // Pin for 1.5 screen heights
-        scrub: 1, 
-        pin: true,
-        // Critical: Forces GSAP to use translate instead of fixed positioning, 
-        // which fixes the disappearing image bug inside the App.jsx transformed container!
-        pinType: "transform" 
+        trigger: sectionRef.current,
+        start: 'top 70%', // Trigger when section top hits 70% of viewport
+        toggleActions: 'play none none none', // Play once
       }
     });
 
-    // 1. Zoom through the image massively
-    tl.to('.transition-img-wrapper', {
-      scale: 35, 
-      duration: 1,
-      ease: 'power2.inOut'
-    })
-    // 2. Fade out the image
-    .to('.transition-img-wrapper', {
-      opacity: 0,
-      duration: 0.5,
-      ease: 'power2.inOut'
-    }, "-=0.3") 
-    // 3. Fade in projects content
-    .to('.projects-content', {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    }, "-=0.2");
+    // 1. Metadata fades in
+    tl.fromTo('.projects-meta', 
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+    )
+    // 2. Main heading slides upward slightly and fades in
+    .fromTo('.projects-heading',
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+      "-=0.3"
+    )
+    // 3. Description follows
+    .fromTo('.projects-desc',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+      "-=0.5"
+    )
+    // 4. The project video composition enters (handled partly by framer motion in showcase, 
+    // but we can fade the whole container here for the entrance)
+    .fromTo('.projects-showcase-container',
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: 1, ease: 'power2.out' },
+      "-=0.3"
+    );
 
-  }, { scope: containerRef });
+  }, { scope: sectionRef });
 
   return (
-    <section ref={containerRef} id="projects" className="relative w-full h-screen bg-ivory text-espresso">
+    <section ref={sectionRef} id="projects" className="relative w-full min-h-screen bg-ivory pt-32 md:pt-40 pb-20 overflow-hidden flex flex-col">
       
-      {/* The Transition Overlay Image */}
-      <div className="transition-img-wrapper absolute z-20 flex items-center justify-center shadow-2xl origin-center w-[90vw] md:w-full max-w-4xl h-[40vh] md:h-[50vh] rounded-md top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <img 
-          src="/projects_transition.jpg" 
-          alt="Projects Transition" 
-          className="w-full h-full object-cover rounded-md"
-        />
+
+       <Proj/>
+
+
+      {/* Editorial Intro */}
+      <div ref={headerRef} className="w-full max-w-7xl mx-auto px-6 md:px-12 xl:px-20 z-10 relative pointer-events-none">
+        
+        <p className="projects-meta font-mono text-xs tracking-widest text-espresso/50 uppercase mb-6 opacity-0">
+          SELECTED PROJECTS / 2024—2026
+        </p>
+
+        <h2 className="projects-heading font-serif text-6xl md:text-[8rem] leading-[0.9] tracking-tighter text-espresso uppercase mb-10 opacity-0 flex flex-col">
+          <span>Selected</span>
+          <span className="text-burgundy italic md:pl-32">Work</span>
+        </h2>
+
+        <p className="projects-desc font-sans text-sm md:text-base text-espresso/80 max-w-md md:ml-auto md:text-right leading-relaxed opacity-0">
+          A collection of experiments, products, interfaces and full-stack experiences I've designed and built — where engineering meets visual storytelling.
+        </p>
+
       </div>
 
-      {/* The Actual Projects Content */}
-      <div className="projects-content absolute inset-0 z-10 bg-ivory flex flex-col items-center pt-32 px-6 md:px-20 overflow-y-auto opacity-0 translate-y-12">
-        <div className="w-full max-w-7xl flex justify-between items-end mb-16 border-b border-espresso/20 pb-8">
-          <h2 className="font-serif text-5xl md:text-8xl tracking-tight text-espresso uppercase">
-            Selected<br/>
-            <span className="text-burgundy italic">Ventures</span>
-          </h2>
-          <p className="font-mono text-sm tracking-widest text-espresso/40 uppercase hidden md:block">
-            // Showcasing recent work
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-7xl pb-32">
-          {/* Project Placeholders */}
-          <div className="group flex flex-col gap-4">
-            <div className="h-[40vh] md:h-[50vh] bg-espresso/5 border border-espresso/10 rounded-sm flex items-center justify-center cursor-pointer overflow-hidden relative">
-              <div className="absolute inset-0 bg-espresso/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-              <span className="font-mono text-sm tracking-widest text-espresso/40 group-hover:scale-110 transition-transform duration-500 z-0">PROJECT 01</span>
-            </div>
-            <div className="flex justify-between items-center font-mono text-xs tracking-widest uppercase">
-              <span className="text-espresso">E-Commerce Platform</span>
-              <span className="text-espresso/40">2026</span>
-            </div>
-          </div>
-          
-          <div className="group flex flex-col gap-4 md:mt-24">
-            <div className="h-[40vh] md:h-[50vh] bg-espresso/5 border border-espresso/10 rounded-sm flex items-center justify-center cursor-pointer overflow-hidden relative">
-              <div className="absolute inset-0 bg-espresso/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-              <span className="font-mono text-sm tracking-widest text-espresso/40 group-hover:scale-110 transition-transform duration-500 z-0">PROJECT 02</span>
-            </div>
-            <div className="flex justify-between items-center font-mono text-xs tracking-widest uppercase">
-              <span className="text-espresso">Fintech Dashboard</span>
-              <span className="text-espresso/40">2026</span>
-            </div>
-          </div>
-        </div>
+      {/* Main Interactive Showcase */}
+      <div className="projects-showcase-container w-full flex-grow relative opacity-0">
+        <ProjectShowcase />
       </div>
 
     </section>
