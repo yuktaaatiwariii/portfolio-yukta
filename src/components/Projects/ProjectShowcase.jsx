@@ -59,7 +59,6 @@ export default function ProjectShowcase() {
     return () => cancelAnimationFrame(animationFrameId);
   }, [activeIndex, isHovered]);
 
-  // Determine positions for the videos
   const getPosition = (index) => {
     if (index === activeIndex) return 'main';
     
@@ -71,19 +70,27 @@ export default function ProjectShowcase() {
     const rightIndex = (activeIndex + 1) % totalProjects;
     if (index === rightIndex) return 'right';
 
-    return 'hidden'; // For any remaining projects > 3
+    // Calculate far-left project
+    const farLeftIndex = (activeIndex - 2 + totalProjects) % totalProjects;
+    if (index === farLeftIndex) return 'far-left';
+
+    // Calculate far-right project
+    const farRightIndex = (activeIndex + 2) % totalProjects;
+    if (index === farRightIndex) return 'far-right';
+
+    return 'hidden'; // For any remaining projects > 5
   };
 
   return (
     <div 
-      className="relative w-full h-[120vh] md:h-screen flex items-center justify-center overflow-hidden"
+      className="relative border-4 border-amber-600 mb-40 w-full h-[120vh] md:h-screen flex items-center justify-center overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative w-full max-w-7xl h-full flex justify-center mt-20 md:mt-0">
         {projectsData.map((project, index) => {
           const position = getPosition(index);
-          if (position === 'hidden' && projectsData.length > 3) return null; // Only render visible for performance if needed
+          if (position === 'hidden' && projectsData.length > 5) return null; // Only render visible for performance if needed
           
           return (
             <ProjectVideo 

@@ -8,9 +8,13 @@ export default function ProjectVideo({ project, position, isHovered, setHovered 
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch(e => console.log("Autoplay prevented:", e));
+      if (position === 'main') {
+        videoRef.current.play().catch(e => console.log("Autoplay prevented:", e));
+      } else {
+        videoRef.current.pause();
+      }
     }
-  }, []);
+  }, [position]);
 
   const variants = {
     main: {
@@ -22,14 +26,31 @@ export default function ProjectVideo({ project, position, isHovered, setHovered 
     left: {
       scale: 0.8,
       opacity: 0.6,
-      zIndex: 0,
+      zIndex: 5,
       filter: 'brightness(0.7)',
     },
     right: {
       scale: 0.8,
       opacity: 0.6,
-      zIndex: 0,
+      zIndex: 5,
       filter: 'brightness(0.7)',
+    },
+    'far-left': {
+      scale: 0.6,
+      opacity: 0.3,
+      zIndex: 0,
+      filter: 'brightness(0.4)',
+    },
+    'far-right': {
+      scale: 0.6,
+      opacity: 0.3,
+      zIndex: 0,
+      filter: 'brightness(0.4)',
+    },
+    hidden: {
+      scale: 0.4,
+      opacity: 0,
+      zIndex: -10,
     }
   };
 
@@ -45,6 +66,9 @@ export default function ProjectVideo({ project, position, isHovered, setHovered 
         position === 'main' ? "w-full max-w-[90vw] md:max-w-[50vw] h-[40vh] md:h-[55vh] top-0 md:top-[10%]" : "",
         position === 'left' ? "w-[70vw] md:w-[30vw] h-[25vh] md:h-[40vh] -left-[10%] md:-left-[5%] top-[50vh] md:top-[25%]" : "",
         position === 'right' ? "w-[70vw] md:w-[30vw] h-[25vh] md:h-[40vh] -right-[10%] md:-right-[5%] top-[80vh] md:top-[25%]" : "",
+        position === 'far-left' ? "w-[70vw] md:w-[30vw] h-[25vh] md:h-[40vh] -left-[15%] md:-left-[25%] top-[60vh] md:top-[35%]" : "",
+        position === 'far-right' ? "w-[70vw] md:w-[30vw] h-[25vh] md:h-[40vh] -right-[15%] md:-right-[25%] top-[90vh] md:top-[35%]" : "",
+        position === 'hidden' ? "w-[70vw] md:w-[30vw] h-[25vh] md:h-[40vh] left-1/2 -translate-x-1/2 top-1/2" : ""
       )}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

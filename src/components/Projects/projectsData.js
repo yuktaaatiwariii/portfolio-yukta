@@ -34,5 +34,14 @@ export const projectsData = [
     description: "An experimental personal portfolio combining editorial design, animation and interactive storytelling.",
     video: "https://www.w3schools.com/html/mov_bbb.mp4", // Placeholder video
     technologies: ["React", "GSAP", "Three.js", "Tailwind"]
+  },
+  {
+    id: 5,
+    title: "VIRTUAL GALLERY",
+    category: "3D Experience",
+    year: "2026",
+    description: "An immersive digital art gallery built for the web with WebGL and React Three Fiber.",
+    video: "https://www.w3schools.com/html/mov_bbb.mp4", // Placeholder video
+    technologies: ["React", "Three.js", "WebGL", "Framer Motion"]
   }
 ];

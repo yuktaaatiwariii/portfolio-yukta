@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagazineTearTransition from './components/MagazineTearTransition/MagazineTearTransition';
+
+gsap.registerPlugin(ScrollTrigger);
 import Hero from './components/Hero/Hero';
-import About from './components/About/About';
 import Achievements from './components/Achievements/Achievements';
-import Projects from './components/Projects/Projects';
+import Projects from './components/Projects/Proj';
 // import Contact from './components/Contact/Contact';
 // import Footer from './components/Footer/Footer';
 
@@ -72,14 +75,19 @@ function App() {
       infinite: false,
     });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    // Sync Lenis with GSAP ScrollTrigger for perfectly smooth scrubbing
+    lenis.on('scroll', ScrollTrigger.update);
 
-    requestAnimationFrame(raf);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
 
-    return () => lenis.destroy();
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(lenis.raf);
+    };
   }, []);
 
   const { scrollY } = useScroll();
@@ -114,9 +122,7 @@ function App() {
           <motion.main style={{ y: smoothY }} className="relative z-0">
             <Hero />
             <Achievements />
-            <About />
             <Projects />
-          
           </motion.main>
           
           {/* Spacer to add 60vh to the document height, allowing full scroll to bottom */}

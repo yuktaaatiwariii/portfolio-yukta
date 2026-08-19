@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import ProjectShowcase from './ProjectShowcase';
-import Proj from "./Proj"
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,8 +14,8 @@ export default function Projects() {
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 70%', // Trigger when section top hits 70% of viewport
+        trigger: headerRef.current,
+        start: 'top 10%', // Trigger when the text actually scrolls into view
         toggleActions: 'play none none none', // Play once
       }
     });
@@ -48,14 +48,11 @@ export default function Projects() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="projects" className="relative w-full min-h-screen bg-ivory pt-32 md:pt-40 pb-20 overflow-hidden flex flex-col">
-      
-
-       <Proj/>
-
-
+    <section ref={sectionRef}  className="relative pb-20 w-full max-h-full bg-ivory border-8 overflow-hidden">
+    
+    
       {/* Editorial Intro */}
-      <div ref={headerRef} className="w-full max-w-7xl mx-auto px-6 md:px-12 xl:px-20 z-10 relative pointer-events-none">
+      <div ref={headerRef} className="w-full max-w-7xl  mx-auto px-6 md:px-12 xl:px-20 z-10 relative pointer-events-none">
         
         <p className="projects-meta font-mono text-xs tracking-widest text-espresso/50 uppercase mb-6 opacity-0">
           SELECTED PROJECTS / 2024—2026
