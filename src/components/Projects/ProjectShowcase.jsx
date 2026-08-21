@@ -83,11 +83,11 @@ export default function ProjectShowcase() {
 
   return (
     <div 
-      className="relative border-4 border-amber-600 mb-40 w-full h-[120vh] md:h-screen flex items-center justify-center overflow-hidden"
+      className="relative mb-40 w-full h-[110vh] flex items-center justify-center "
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative w-full max-w-7xl h-full flex justify-center mt-20 md:mt-0">
+      <div className="relative z-10 w-6xl h-full flex justify-center mt-10 ">
         {projectsData.map((project, index) => {
           const position = getPosition(index);
           if (position === 'hidden' && projectsData.length > 5) return null; // Only render visible for performance if needed
