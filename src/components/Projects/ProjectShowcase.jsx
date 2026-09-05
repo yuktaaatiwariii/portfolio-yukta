@@ -1,116 +1,201 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ProjectVideo from './ProjectVideo';
-import ProjectNavigation from './ProjectNavigation';
-import { projectsData } from './projectsData';
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+import ProjectSlide from "./ProjectSlide";
+import { projectsData } from "./projectsData";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ProjectShowcase() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [progress, setProgress] = useState(0);
-  
-  const totalProjects = projectsData.length;
-  const duration = 5000; // 5 seconds
-  const intervalRef = useRef(null);
-  const startTimeRef = useRef(null);
-  const progressRef = useRef(0);
+  const showcaseRef = useRef(null);
+  const trackRef = useRef(null);
+  const progressRef = useRef(null);
 
-  const goToNext = () => {
-    setActiveIndex((prev) => (prev + 1) % totalProjects);
-    resetTimer();
-  };
+  const displayProjects = projectsData.slice(0, 3);
 
-  const goToPrev = () => {
-    setActiveIndex((prev) => (prev - 1 + totalProjects) % totalProjects);
-    resetTimer();
-  };
+  useGSAP(() => {
+    const section = showcaseRef.current;
+    const track = trackRef.current;
+    const progress = progressRef.current;
 
-  const resetTimer = () => {
-    setProgress(0);
-    progressRef.current = 0;
-    startTimeRef.current = performance.now();
-  };
+    if (!section || !track) return;
 
-  // Timer animation loop using requestAnimationFrame for smooth progress
-  useEffect(() => {
-    let animationFrameId;
-
-    const animateProgress = (timestamp) => {
-      if (!startTimeRef.current) startTimeRef.current = timestamp;
-      
-      if (!isHovered) {
-        const elapsed = timestamp - startTimeRef.current;
-        const currentProgress = Math.min((elapsed / duration) * 100, 100);
-        
-        setProgress(currentProgress);
-        
-        if (currentProgress >= 100) {
-          goToNext();
-        }
-      } else {
-        // If hovered, pause the timer by pushing the start time forward
-        startTimeRef.current = timestamp - (progress * duration) / 100;
-      }
-
-      animationFrameId = requestAnimationFrame(animateProgress);
+    const getDistance = () => {
+      return track.scrollWidth - window.innerWidth;
     };
 
-    animationFrameId = requestAnimationFrame(animateProgress);
+    const ctx = gsap.context(() => {
 
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [activeIndex, isHovered]);
+      gsap.to(track, {
+       x: () => -(track.scrollWidth - window.innerWidth),
 
-  const getPosition = (index) => {
-    if (index === activeIndex) return 'main';
-    
-    // Calculate the left project (previous)
-    const leftIndex = (activeIndex - 1 + totalProjects) % totalProjects;
-    if (index === leftIndex) return 'left';
-    
-    // Calculate the right project (next)
-    const rightIndex = (activeIndex + 1) % totalProjects;
-    if (index === rightIndex) return 'right';
+        ease: "none",
 
-    // Calculate far-left project
-    const farLeftIndex = (activeIndex - 2 + totalProjects) % totalProjects;
-    if (index === farLeftIndex) return 'far-left';
+        scrollTrigger: {
+          trigger: section,
 
-    // Calculate far-right project
-    const farRightIndex = (activeIndex + 2) % totalProjects;
-    if (index === farRightIndex) return 'far-right';
+          start: "top top",
 
-    return 'hidden'; // For any remaining projects > 5
-  };
+          end: "+=3000",
+
+          pin: true,
+
+          scrub: true,
+          markers: true,
+          invalidateOnRefresh: true,
+
+          anticipatePin: 1,
+
+          onUpdate: (self) => {
+            if (!progress) return;
+
+            gsap.set(progress, {
+              scaleX: self.progress,
+            });
+          },
+        },
+      });
+
+    }, section);
+
+    return () => ctx.revert();
+
+  }, []);
+
 
   return (
-    <div 
-      className="relative mb-40 w-full h-[110vh] flex items-center justify-center "
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <section
+      ref={showcaseRef}
+      className="
+        relative
+        h-screen
+        w-full
+        overflow-hidden
+        bg-[#080808]
+        text-white
+      "
     >
-      <div className="relative z-10 w-6xl h-full flex justify-center mt-10 ">
-        {projectsData.map((project, index) => {
-          const position = getPosition(index);
-          if (position === 'hidden' && projectsData.length > 5) return null; // Only render visible for performance if needed
-          
-          return (
-            <ProjectVideo 
-              key={project.id}
-              project={project}
-              position={position}
-              isHovered={isHovered}
-              setHovered={setIsHovered}
-            />
-          );
-        })}
+
+      {/* ================= HEADER ================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-6
+          top-8
+          z-50
+          md:left-16
+          md:top-12
+        "
+      >
+        <span
+          className="
+            mb-3
+            block
+            font-mono
+            text-xs
+            font-bold
+            tracking-[0.35em]
+            text-yellow-500
+          "
+        >
+          / WORK
+        </span>
+
+        <h2
+          className="
+            whitespace-nowrap
+            text-5xl
+            font-bold
+            uppercase
+            leading-none
+            tracking-[-0.06em]
+            md:text-7xl
+            lg:text-[7rem]
+          "
+        >
+          SELECTED{" "}
+
+          <span
+            className="text-transparent"
+            style={{
+              WebkitTextStroke: "1px #eab308",
+            }}
+          >
+            WORK
+          </span>
+        </h2>
+
+        {/* ================= PROGRESS ================= */}
+
+        <div
+          className="
+            mt-6
+            h-[2px]
+            w-40
+            overflow-hidden
+            bg-white/10
+          "
+        >
+          <div
+            ref={progressRef}
+            className="
+              h-full
+              w-full
+              origin-left
+              scale-x-0
+              bg-yellow-500
+            "
+          />
+        </div>
       </div>
 
-      <ProjectNavigation 
-        total={totalProjects}
-        current={activeIndex}
-        onNext={goToNext}
-        onPrev={goToPrev}
-        progress={progress}
-      />
-    </div>
+
+      {/* ================= HORIZONTAL TRACK ================= */}
+
+      <div
+        ref={trackRef}
+        className="
+          relative
+          flex
+          h-screen
+          w-max
+        "
+      >
+        {displayProjects.map((project, index) => (
+          <ProjectSlide
+            key={project.id}
+            project={project}
+            index={index}
+          />
+        ))}
+      </div>
+
+
+      {/* ================= FOOTER HINT ================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          bottom-8
+          left-1/2
+          z-50
+          -translate-x-1/2
+          whitespace-nowrap
+          font-mono
+          text-[9px]
+          uppercase
+          tracking-[0.3em]
+          text-white/40
+        "
+      >
+        Scroll to explore →
+      </div>
+
+    </section>
   );
 }

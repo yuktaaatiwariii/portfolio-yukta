@@ -149,8 +149,8 @@
   gap: 25px;
   place-content: center;
   place-items: center;
-  flex-grow: 1;
-
+  flex-grow: 1; }
+/* 
   @media (max-width: 1024px) {
     padding: 32px 20px 24px;
     gap: 18px;
@@ -174,9 +174,9 @@
     margin-bottom: 16px;
     width: 22px;
     height: 22px;
-  }
+  } */
 
-  @media (max-width: 1024px) {
+  /* @media (max-width: 1024px) {
     flex-direction: column;
     text-align: center;
   }
@@ -221,9 +221,9 @@
       height: 18px;
       width: 18px;
     }
-  }
+  } */
 
-  @media (max-width: 1024px) {
+  /* @media (max-width: 1024px) {
     margin-top: 20px;
     flex-wrap: wrap;
     justify-content: center;
@@ -238,16 +238,16 @@
       box-sizing: border-box;
     }
   }
-}
+} */
 
-#spacer {
+/* #spacer {
   height: 88px;
   border-top: 1px solid var(--border);
   @media (max-width: 1024px) {
     height: 48px;
   }
-}
-
+} */
+/* 
 .ticks {
   position: relative;
   width: 100%;
@@ -268,23 +268,6 @@
     right: 0;
     border-right-color: var(--border);
   }
-}
+} */
 
-@keyframes water-wobble {
-  0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-  33% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
-  66% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; }
-}
 
-@keyframes water-wobble-alt {
-  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-}
-
-.animate-water {
-  animation: water-wobble 8s ease-in-out infinite;
-}
-
-.animate-water-alt {
-  animation: water-wobble-alt 10s ease-in-out infinite alternate;
-}

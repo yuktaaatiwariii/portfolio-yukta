@@ -132,7 +132,7 @@ export default function Hero() {
             <motion.div 
               variants={itemVars}
               style={{ y: yImage }}
-              className="absolute h-full  bg-amber-900 right-36 w-full md:w-[65%]  z-20 flex justify-end  "
+              className="absolute h-full  bg-burgundy right-36 w-full md:w-[65%]  z-20 flex justify-end  "
             >
               <img 
                 src={mona1} 

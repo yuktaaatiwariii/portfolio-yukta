@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,6 +10,7 @@ import Achievements from './components/Achievements/Achievements';
 import Projects from './components/Projects/Proj';
 // import Contact from './components/Contact/Contact';
 // import Footer from './components/Footer/Footer';
+import Services from './components/Services/Services';
 
 function CustomCursor() {
 // ... (keeping CustomCursor unchanged)
@@ -90,26 +90,6 @@ function App() {
     };
   }, []);
 
-  const { scrollY } = useScroll();
-  const [vh, setVh] = useState(1000);
-  
-  useEffect(() => {
-    setVh(window.innerHeight);
-    
-    const handleResize = () => setVh(window.innerHeight);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Pin the portfolio for the first 120vh by translating it down exactly as much as we scroll.
-  const y = useTransform(scrollY, [0, vh * 1.2], [0, vh * 1.2], { clamp: true });
-  
-  // Apply the exact same spring physics as the tear animation to fix staggering
-  const smoothY = useSpring(y, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
   return (
     <>
@@ -119,14 +99,14 @@ function App() {
         <MagazineTearTransition />
         
         <div id="smooth-content">
-          <motion.main style={{ y: smoothY }} className="relative z-0">
+          <main  className="relative z-0">
             <Hero />
             <Achievements />
+            <Services />
             <Projects />
-          </motion.main>
+          </main>
           
-          {/* Spacer to add 60vh to the document height, allowing full scroll to bottom */}
-          <div style={{ height: '60vh' }} pointerEvents="none" />
+         
         </div>
       </div>
     </>
