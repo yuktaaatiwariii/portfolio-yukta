@@ -13,56 +13,37 @@ export default function ProjectShowcase() {
   const trackRef = useRef(null);
   const progressRef = useRef(null);
 
-  const displayProjects = projectsData.slice(0, 3);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const displayProjects = projectsData;
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % displayProjects.length);
+    }, 10000); // 10 seconds
+
+    return () => clearInterval(interval);
+  }, [displayProjects.length]);
 
   useGSAP(() => {
-    const section = showcaseRef.current;
     const track = trackRef.current;
     const progress = progressRef.current;
 
-    if (!section || !track) return;
+    if (!track) return;
 
-    const getDistance = () => {
-      return track.scrollWidth - window.innerWidth;
-    };
+    gsap.to(track, {
+      x: () => -(currentIndex * window.innerWidth),
+      duration: 1.5,
+      ease: "power3.inOut",
+    });
 
-    const ctx = gsap.context(() => {
-
-      gsap.to(track, {
-       x: () => -(track.scrollWidth - window.innerWidth),
-
-        ease: "none",
-
-        scrollTrigger: {
-          trigger: section,
-
-          start: "top top",
-
-          end: "+=3000",
-
-          pin: true,
-
-          scrub: true,
-          markers: true,
-          invalidateOnRefresh: true,
-
-          anticipatePin: 1,
-
-          onUpdate: (self) => {
-            if (!progress) return;
-
-            gsap.set(progress, {
-              scaleX: self.progress,
-            });
-          },
-        },
+    if (progress) {
+      gsap.to(progress, {
+        scaleX: (currentIndex + 1) / displayProjects.length,
+        duration: 1.5,
+        ease: "power3.inOut",
       });
-
-    }, section);
-
-    return () => ctx.revert();
-
-  }, []);
+    }
+  }, [currentIndex, displayProjects.length]);
 
 
   return (

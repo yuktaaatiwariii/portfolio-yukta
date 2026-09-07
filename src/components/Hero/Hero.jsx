@@ -6,6 +6,12 @@ import Navigation from '../Navigation/Navigation';
 export default function Hero() {
   const { scrollY } = useScroll();
   
+  const yHero = useTransform(
+    scrollY, 
+    [0, window.innerHeight * 1.2], 
+    [0, window.innerHeight * 1.2]
+  );
+
   // Subtle parallax effects
   const yImage = useTransform(scrollY, [0, 1000], [0, 0]);
   const yTextSolid = useTransform(scrollY, [0, 1000], [0, -100]);
@@ -20,7 +26,7 @@ export default function Hero() {
 
   useEffect(() => {
     const updateAnim = () => {
-      if (scrollY.get() > window.innerHeight * 0.4 && !startAnim) {
+      if (scrollY.get() > window.innerHeight * 0.75 && !startAnim) {
         setStartAnim(true);
       }
     };
@@ -53,12 +59,13 @@ export default function Hero() {
 
 
   return (
-    <section 
-      id="hero-editorial" 
-      className="relative w-full h-screen z-50 flex items-center justify-center"
-      style={{ backgroundColor: '#EFE3D7' }}
-    >
-      <Navigation />
+    <div className="relative z-0" style={{ height: "220vh" }}>
+      <motion.section 
+        id="hero-editorial" 
+        className="absolute top-0 w-full h-screen z-30 flex items-center justify-center overflow-hidden"
+        style={{ backgroundColor: '#EFE3D7', y: yHero }}
+      >
+        <Navigation />
       <motion.div 
         variants={containerVars}
         initial="hidden"
@@ -207,7 +214,8 @@ export default function Hero() {
        
      
 
-      </motion.div>
-    </section>
+        </motion.div>
+      </motion.section>
+    </div>
   );
 }
