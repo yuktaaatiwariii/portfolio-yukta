@@ -26,8 +26,8 @@ export default function ProjectSlide({ project, index }) {
         w-screen
         shrink-0
         overflow-hidden
-        bg-[#080808]
-        text-white
+        bg-[#2e0303]
+        text-white 
       "
     >
 
@@ -37,68 +37,20 @@ export default function ProjectSlide({ project, index }) {
 
       <div className="pointer-events-none absolute inset-0">
 
-        {/* Large subtle yellow glow */}
-
-        <div
-          className="
-            absolute
-            right-[-10%]
-            top-[15%]
-            h-[500px]
-            w-[500px]
-            rounded-full
-            bg-yellow-400/[0.025]
-            blur-[120px]
-          "
-        />
-
-        {/* Large dark gradient */}
+       
 
         <div
           className="
             absolute
             inset-0
             bg-gradient-to-r
-            from-[#080808]
+            from-[#2c0d0d]
             via-[#080808]/90
-            to-[#080808]/20
+            to-[#080808]/10
           "
         />
 
-      </div>
-
-
-      {/* =====================================================
-          DECORATIVE CIRCLES
-      ===================================================== */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[8%]
-          top-[30%]
-          h-[450px]
-          w-[450px]
-          rounded-full
-          border
-          border-white/[0.035]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[12%]
-          top-[35%]
-          h-[350px]
-          w-[350px]
-          rounded-full
-          border
-          border-white/[0.035]
-        "
-      />
+      </div> 
 
 
       {/* =====================================================
@@ -107,7 +59,7 @@ export default function ProjectSlide({ project, index }) {
 
     <div
   className="
-    relative
+    relative 
     z-10
     flex
     h-screen
@@ -144,7 +96,7 @@ export default function ProjectSlide({ project, index }) {
               h-full
               flex-col
               justify-center
-              lg:pr-10
+              lg:pl-20 mt-30
             "
           >
 
@@ -220,13 +172,13 @@ export default function ProjectSlide({ project, index }) {
                 leading-[0.78]
                 tracking-[-0.08em]
 
-                sm:text-[13vw]
+                sm:text-[6vw]
 
-                md:text-[10vw]
+                md:text-[4vw]
 
-                lg:text-[7rem]
+                lg:text-[5rem]
 
-                xl:text-[8rem]
+                xl:text-[6rem]
               "
             >
               {project.title}
@@ -426,27 +378,27 @@ export default function ProjectSlide({ project, index }) {
               className="
                 relative
                 z-10
-                h-[52vh]
-                max-h-[620px]
+                h-[54vh]
+                max-h-[640px]
                 w-[270px]
                 rounded-[38px]
                 border
                 border-white/20
                 bg-[#111]
-                p-[7px]
+                p-[9px]
                 shadow-[0_40px_100px_rgba(0,0,0,0.85)]
                 transition-transform
                 duration-700
-
+                mt-30
                 hover:-translate-y-3
 
                 sm:w-[290px]
 
-                md:h-[62vh]
+                md:h-[64vh]
                 md:w-[310px]
                 md:rounded-[42px]
 
-                lg:h-[65vh]
+                lg:h-[68vh]
                 lg:w-[320px]
               "
             >

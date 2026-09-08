@@ -5,7 +5,7 @@ export const projectsData = [
     category: "Brand Experience",
     year: "2026",
     description: "A cinematic premium website for a multi-sector hospitality, aviation and real-estate brand.",
-    video: "https://www.w3schools.com/html/mov_bbb.mp4", // Placeholder video
+    video: "https://domains.cloudflare.com/?domain=ombreille", // Placeholder video
     technologies: ["React", "Tailwind CSS", "Framer Motion", "Node.js"]
   },
   {
@@ -28,7 +28,7 @@ export const projectsData = [
   },
   {
     id: 4,
-    title: "PORTFOLIO LAB",
+    title: "PORTFOLIO",
     category: "Creative Development",
     year: "2026",
     description: "An experimental personal portfolio combining editorial design, animation and interactive storytelling.",
@@ -37,7 +37,7 @@ export const projectsData = [
   },
   {
     id: 5,
-    title: "VIRTUAL GALLERY",
+    title: "MOJITO",
     category: "3D Experience",
     year: "2026",
     description: "An immersive digital art gallery built for the web with WebGL and React Three Fiber.",

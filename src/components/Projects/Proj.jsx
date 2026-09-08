@@ -51,23 +51,6 @@ export default function ProjectsLoad() {
 
       /*
       ========================================================
-      IMPORTANT OFFSET
-      ========================================================
-
-      App.jsx translates the entire <motion.main>
-      down by a maximum of 120vh.
-
-      Therefore GSAP's DOM measurement and the
-      visual position are different.
-
-      We compensate for that here.
-      */
-
-
-
-
-      /*
-      ========================================================
       INTRO TIMELINE
       ========================================================
       */
@@ -80,9 +63,6 @@ export default function ProjectsLoad() {
           /*
           ====================================================
           START
-
-          Because App.jsx moves the entire main content
-          downward, GSAP needs to compensate for it.
           ====================================================
           */
 
@@ -129,18 +109,6 @@ export default function ProjectsLoad() {
 
           anticipatePin: 1,
 
-
-          /*
-          VERY IMPORTANT
-
-          Your entire portfolio is inside:
-
-          <motion.main style={{ y: smoothY }}>
-
-          So using transform pinning is safer
-          than position: fixed.
-          */
-
           pinType: "transform",
         },
       });
@@ -154,12 +122,9 @@ export default function ProjectsLoad() {
 
       timeline.to(imageWrapper, {
         scale: 15,
-
         duration: 1,
-
         ease: "none",
-
-        force3D: false,
+        force3D: true,
       });
 
 

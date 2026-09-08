@@ -75,6 +75,12 @@ function App() {
       infinite: false,
     });
 
+    // Force scroll to top on load with a slight delay to override browser restoration
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true });
+    }, 50);
+
     // Sync Lenis with GSAP ScrollTrigger for perfectly smooth scrubbing
     lenis.on('scroll', ScrollTrigger.update);
 

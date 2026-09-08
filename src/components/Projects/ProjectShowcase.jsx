@@ -13,16 +13,17 @@ export default function ProjectShowcase() {
   const trackRef = useRef(null);
   const progressRef = useRef(null);
 
+  const displayProjects = [...projectsData, projectsData[0]]; // Clone first project for seamless loop
   const [currentIndex, setCurrentIndex] = React.useState(0);
-  const displayProjects = projectsData;
+  const isInstantRef = useRef(false);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % displayProjects.length);
+      setCurrentIndex((prev) => prev + 1);
     }, 10000); // 10 seconds
 
     return () => clearInterval(interval);
-  }, [displayProjects.length]);
+  }, []);
 
   useGSAP(() => {
     const track = trackRef.current;
@@ -30,20 +31,35 @@ export default function ProjectShowcase() {
 
     if (!track) return;
 
+    if (isInstantRef.current) {
+      gsap.set(track, { x: 0 });
+      if (progress) gsap.set(progress, { scaleX: 1 / projectsData.length });
+      isInstantRef.current = false;
+      return;
+    }
+
     gsap.to(track, {
       x: () => -(currentIndex * window.innerWidth),
       duration: 1.5,
       ease: "power3.inOut",
+      onComplete: () => {
+        // If we reached the cloned slide, seamlessly jump back to real first slide
+        if (currentIndex === displayProjects.length - 1) {
+          isInstantRef.current = true;
+          setCurrentIndex(0);
+        }
+      }
     });
 
     if (progress) {
+      let progressScale = ((currentIndex % projectsData.length) + 1) / projectsData.length;
       gsap.to(progress, {
-        scaleX: (currentIndex + 1) / displayProjects.length,
+        scaleX: progressScale,
         duration: 1.5,
         ease: "power3.inOut",
       });
     }
-  }, [currentIndex, displayProjects.length]);
+  }, [currentIndex]);
 
 
   return (
@@ -114,9 +130,9 @@ export default function ProjectShowcase() {
 
         <div
           className="
-            mt-6
+            
             h-[2px]
-            w-40
+            w-200
             overflow-hidden
             bg-white/10
           "
@@ -148,7 +164,7 @@ export default function ProjectShowcase() {
       >
         {displayProjects.map((project, index) => (
           <ProjectSlide
-            key={project.id}
+            key={`${project.id}-${index}`}
             project={project}
             index={index}
           />
