@@ -8,8 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 import Hero from './components/Hero/Hero';
 import Achievements from './components/Achievements/Achievements';
 import Projects from './components/Projects/Proj';
-// import Contact from './components/Contact/Contact';
-// import Footer from './components/Footer/Footer';
+import Contact from './components/Contact/Contact';
+import Footer from './components/Footer/Footer';
 import Services from './components/Services/Services';
 
 function CustomCursor() {
@@ -110,9 +110,10 @@ function App() {
             <Achievements />
             <Services />
             <Projects />
+            <Contact />
           </main>
           
-         
+         <Footer />
         </div>
       </div>
     </>

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import ProjectSlide from "./ProjectSlide";
 import { projectsData } from "./projectsData";
@@ -23,7 +24,15 @@ export default function ProjectShowcase() {
     }, 10000); // 10 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [currentIndex]);
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => prev + 1);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : projectsData.length - 1));
+  };
 
   useGSAP(() => {
     const track = trackRef.current;
@@ -171,6 +180,23 @@ export default function ProjectShowcase() {
         ))}
       </div>
 
+
+      {/* ================= NAVIGATION ARROWS ================= */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-2 top-1/2 -translate-y-1/2 z-50 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/50 hover:bg-yellow-500 hover:text-black hover:border-yellow-500 transition-all duration-300 md:left-6"
+        data-cursor="PREV"
+      >
+        <ChevronLeft size={32} />
+      </button>
+
+      <button
+        onClick={handleNext}
+        className="absolute right-2 top-1/2 -translate-y-1/2 z-50 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/50 hover:bg-yellow-500 hover:text-black hover:border-yellow-500 transition-all duration-300 md:right-6"
+        data-cursor="NEXT"
+      >
+        <ChevronRight size={32} />
+      </button>
 
       {/* ================= FOOTER HINT ================= */}
 

@@ -376,35 +376,33 @@ export default function ProjectSlide({ project, index }) {
 
             <div
               className="
-                relative
+                relative 
                 z-10
-                h-[54vh]
-                max-h-[640px]
-                w-[270px]
-                rounded-[38px]
+                w-[85vw]
+                max-w-[700px]
+                aspect-[16/10]
+                rounded-[24px]
                 border
                 border-white/20
                 bg-[#111]
-                p-[9px]
+                p-[10px]
                 shadow-[0_40px_100px_rgba(0,0,0,0.85)]
                 transition-transform
                 duration-700
-                mt-30
+                mt-12
                 hover:-translate-y-3
 
-                sm:w-[290px]
+                md:w-[65vw]
+                md:rounded-[32px]
+                md:p-[12px]
 
-                md:h-[64vh]
-                md:w-[310px]
-                md:rounded-[42px]
-
-                lg:h-[68vh]
-                lg:w-[320px]
+                lg:w-[45vw]
+                lg:max-w-[800px]
               "
             >
 
               {/* ============================================
-                  PHONE INNER BODY
+                  TABLET INNER BODY
               ============================================ */}
 
               <div
@@ -413,48 +411,29 @@ export default function ProjectSlide({ project, index }) {
                   h-full
                   w-full
                   overflow-hidden
-                  rounded-[31px]
+                  rounded-[16px]
                   bg-black
 
-                  md:rounded-[35px]
+                  md:rounded-[22px]
                 "
               >
 
-
                 {/* ==========================================
-                    TOP NOTCH
+                    CAMERA DOT
                 ========================================== */}
-
-                <div
+                <div 
                   className="
                     absolute
                     left-1/2
-                    top-0
-                    z-40
-                    h-7
-                    w-28
+                    -top-3
+                    z-50
+                    h-1.5
+                    w-1.5
                     -translate-x-1/2
-                    rounded-b-2xl
-                    bg-black
+                    rounded-full
+                    bg-[#222]
                   "
-                >
-
-                  {/* Speaker */}
-
-                  <div
-                    className="
-                      absolute
-                      left-1/2
-                      top-2.5
-                      h-1.5
-                      w-10
-                      -translate-x-1/2
-                      rounded-full
-                      bg-white/10
-                    "
-                  />
-
-                </div>
+                />
 
 
                 {/* ==========================================
