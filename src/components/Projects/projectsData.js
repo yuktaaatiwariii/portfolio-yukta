@@ -1,6 +1,7 @@
 import agrihubVideo from "../../assets/agrihub-video.mp4";
 import ombreilleVideo from "../../assets/ombreille.mp4";
 import mojitoVideo from "../../assets/Mojito.mp4";
+import ledgerPay from "../../assets/ledgerpay.mp4";
 
 export const projectsData = [
   {
@@ -51,7 +52,7 @@ export const projectsData = [
     description:
       "A full-stack banking management system designed to simulate the core functionality of a modern digital banking platform. LedgerPay provides secure authentication, account management, fund transfers, transaction history, administrator controls, and an immutable ledger system.",
 
-    video: "",
+    video: ledgerPay,
 
     technologies: [
       "React",
@@ -72,7 +73,7 @@ export const projectsData = [
     description:
       "An AI-powered career SaaS platform that conducts personalized interviews in the candidate’s preferred language and provides detailed performance feedback. It also includes an AI resume analyzer and optimizer, resume builder, and job board for tracking applications and managing the job search journey.",
 
-    video: "",
+    video: "In Progress",
 
     technologies: [
       "Next.js",
