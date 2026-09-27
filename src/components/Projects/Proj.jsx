@@ -110,6 +110,18 @@ export default function ProjectsLoad() {
           anticipatePin: 1,
 
           pinType: "transform",
+          
+          /*
+          Bypass the animation and pin spacing when scrolling backwards
+          */
+          onEnterBack: () => {
+            if (window.lenis) {
+              window.lenis.scrollTo(containerRef.current, { 
+                offset: -10, 
+                immediate: true 
+              });
+            }
+          }
         },
       });
 
@@ -121,7 +133,7 @@ export default function ProjectsLoad() {
       */
 
       timeline.to(imageWrapper, {
-        scale: 15,
+        scale: 1.10,
         duration: 1,
         ease: "none",
         force3D: true,
@@ -138,9 +150,7 @@ export default function ProjectsLoad() {
         imageWrapper,
         {
           opacity: 0,
-
           duration: 0.5,
-
           ease: "none",
         },
         "-=0.25"

@@ -74,6 +74,8 @@ function App() {
       touchMultiplier: 2,
       infinite: false,
     });
+    
+    window.lenis = lenis;
 
     // Force scroll to top on load with a slight delay to override browser restoration
     setTimeout(() => {
