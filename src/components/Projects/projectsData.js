@@ -1,7 +1,7 @@
 import agrihubVideo from "../../assets/agrihub-video.mp4";
 import ombreilleVideo from "../../assets/ombreille.mp4";
 import mojitoVideo from "../../assets/Mojito.mp4";
-import ledgerPay from "../../assets/ledgerpay.mp4";
+import ledgerPay from "../../assets/ledgerPay.mp4";
 
 export const projectsData = [
   {
